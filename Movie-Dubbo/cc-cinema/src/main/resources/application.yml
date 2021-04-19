@@ -1,0 +1,42 @@
+server:
+  port: 8099 #项目端口
+
+mybatis-plus:
+  mapper-locations: classpath*:com/stylefeng/guns/**/dao/mapping/*.xml
+  typeAliasesPackage: com.stylefeng.guns.*.modular.*.model
+  global-config:
+    id-type: 0  #0:数据库ID自增   1:用户输入id  2:全局唯一id(IdWorker)  3:全局唯一ID(uuid)
+    db-column-underline: false
+    refresh-mapper: true
+  configuration:
+    map-underscore-to-camel-case: false
+    cache-enabled: true #配置的缓存的全局开关
+    lazyLoadingEnabled: true #延时加载的开关
+    multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+
+spring:
+  application:
+    name: cc-cinema
+  datasource:
+      url: jdbc:mysql://120.92.164.231:3306/cc_film?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+      username: root
+      password: root
+      filters: log4j,wall,mergeStat
+
+dubbo:
+  protocol:
+    name: dubbo
+    port: 20899
+    accepts: 10  # dubbo服务最大连接数
+  scan:
+    base-packages: com.stylefeng.guns.cinema
+  registry:
+    address: zookeeper://120.92.164.231:2181
+    timeout: 10000
+
+logging:
+  level.root: info
+  level.com.stylefeng: debug
+  path: logs/
+  file: cc-cinema.log

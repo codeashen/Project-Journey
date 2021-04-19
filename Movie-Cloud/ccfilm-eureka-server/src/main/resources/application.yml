@@ -1,0 +1,20 @@
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+
+# Spring Security 配置
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: SUPERUSER

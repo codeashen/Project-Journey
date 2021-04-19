@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.film.modular.film.dao.CcFilmMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.film.modular.film.model.CcFilm">
+        <id column="UUID" property="uuid"/>
+        <result column="film_name" property="filmName"/>
+        <result column="film_type" property="filmType"/>
+        <result column="img_address" property="imgAddress"/>
+        <result column="film_score" property="filmScore"/>
+        <result column="film_preSaleNum" property="filmPresalenum"/>
+        <result column="film_box_office" property="filmBoxOffice"/>
+        <result column="film_source" property="filmSource"/>
+        <result column="film_cats" property="filmCats"/>
+        <result column="film_area" property="filmArea"/>
+        <result column="film_date" property="filmDate"/>
+        <result column="filmime" property="filmime"/>
+        <result column="film_status" property="filmStatus"/>
+    </resultMap>
+
+    <select id="getFilmDetailByName" resultType="com.stylefeng.guns.api.film.vo.FilmDetailVo">
+        SELECT
+           film.uuid AS filmId,
+           film.film_name AS filmName,
+           info.film_en_name AS filmEnName,
+           film.img_address AS imgAddress,
+           info.film_score AS score,
+           info.film_score_num AS scoreNum,
+           film.film_box_office AS totalBox,
+           (
+               SELECT GROUP_CONCAT(show_name SEPARATOR ',') 
+               FROM cc_cat_dict t 
+               WHERE FIND_IN_SET (
+                   t.uuid, (SELECT REPLACE(TRIM(BOTH '#' FROM film_cats),'#',',') FROM cc_film t WHERE t.uuid=film.uuid)
+               )
+           ) AS info01,
+           CONCAT((SELECT show_name FROM cc_source_dict t WHERE t.uuid=film.uuid), ' / ', info.film_length, '分钟') AS info02,
+           CONCAT(film.filmime, (SELECT show_name FROM cc_source_dict t WHERE t.uuid=film.uuid), '上映') AS info03
+        FROM cc_film film, cc_film_info info
+        WHERE film.UUID = info.film_id
+        AND film.film_name LIKE #{filmName}
+    </select>
+
+    <select id="getFilmDetailById" resultType="com.stylefeng.guns.api.film.vo.FilmDetailVo">
+        SELECT
+            film.uuid AS filmId,
+            film.film_name AS filmName,
+            info.film_en_name AS filmEnName,
+            film.img_address AS imgAddress,
+            info.film_score AS score,
+            info.film_score_num AS scoreNum,
+            film.film_box_office AS totalBox,
+            (
+                SELECT GROUP_CONCAT(show_name SEPARATOR ',') FROM cc_cat_dict t
+                WHERE FIND_IN_SET (
+                    t.uuid, (SELECT REPLACE(TRIM(BOTH '#' FROM film_cats),'#',',') FROM cc_film t WHERE t.uuid=film.uuid)
+                )
+            ) AS info01,
+            CONCAT((SELECT show_name FROM cc_source_dict t WHERE t.uuid=film.uuid), ' / ', info.film_length, '分钟') AS info02,
+            CONCAT(film.filmime, (SELECT show_name FROM cc_source_dict t WHERE t.uuid=film.uuid), '上映') AS info03
+        FROM cc_film film, cc_film_info info
+        WHERE film.UUID = info.film_id
+        AND film.UUID = #{uuid}
+    </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.film.modular.film.dao.CcActorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.film.modular.film.model.CcActor">
+        <id column="UUID" property="uuid" />
+        <result column="actor_name" property="actorName" />
+        <result column="actor_img" property="actorImg" />
+    </resultMap>
+
+    <select id="getActors" resultType="com.stylefeng.guns.api.film.vo.ActorVo">
+        select 
+            actor.actor_name as directorName,
+            actor.actor_img as imgAddress,
+            rela.role_name  as roleName
+        from cc_actor actor, cc_film_actor rela
+        where actor.UUID = rela.actor_id
+            and rela.film_id = #{filmId}
+    </select>
+
+</mapper>

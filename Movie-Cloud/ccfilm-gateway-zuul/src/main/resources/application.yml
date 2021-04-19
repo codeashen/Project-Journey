@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+
+zuul:
+  prefix: "/webapi/"             # 统一前缀
+  routes:                        # 路由规则
+    ccfilm-user:
+      path: /user-api/**         # 路径匹配规则
+      serviceId: user-service    # 服务名称, 可以通过path访问，也可以通过serviceId访问
+      retryable: true            # 是否重试
+    ccfilm-cinema:
+      path: /cinema-api/**
+      serviceId: cinema-service
+      retryable: true
+    ccfilm-film:
+      path: /film-api/**
+      serviceId: film-service
+      retryable: true
+    ccfilm-hall:
+      path: /hall-api/**
+      serviceId: hall-service
+      retryable: true
+  sensitive-headers: "secret"   # 名叫secret的header头会被过滤
+
+# Zuul整合Hystrix设置超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000   #可以设置足够小，以测试fallback
+spring:
+  application:
+    name: api-gateway

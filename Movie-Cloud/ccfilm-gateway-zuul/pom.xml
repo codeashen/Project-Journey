@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ccfilm-parent</artifactId>
+        <groupId>com.ashen</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ccfilm-gateway-zuul</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ashen</groupId>
+            <artifactId>ccfilm-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>druid-spring-boot-starter</artifactId>
+                    <groupId>com.alibaba</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                    <groupId>com.baomidou</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mybatis-plus-generator</artifactId>
+                    <groupId>com.baomidou</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+    </dependencies>
+    
+</project>

@@ -1,0 +1,39 @@
+rest:
+  auth-open: true #jwt鉴权机制是否开启(true或者false)
+  sign-open: true #签名机制是否开启(true或false)
+
+jwt:
+  header: Authorization   #http请求头所需要的字段
+  secret: mySecret        #jwt秘钥
+  expiration: 604800      #7天 单位:秒
+  auth-path: auth         #认证请求的路径
+  md5-key: randomKey      #md5加密混淆key
+  ignore-url: /user/register,/user/check,/film/*    #忽略登录校验请求路径
+
+server:
+  port: 80 #项目端口
+
+spring:
+  application:
+    name: cc-gateway
+  datasource:
+    url: jdbc:mysql://120.92.164.231:3306/cc_film?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    filters: log4j,wall,mergeStat
+
+dubbo:
+  protocol:
+    name: dubbo
+    port: 20880
+  scan:
+    base-packages: com.stylefeng.guns.gateway
+  registry:
+    address: zookeeper://120.92.164.231:2181
+    timeout: 10000
+
+logging:
+  level.root: info
+  level.com.stylefeng: debug
+  path: logs/
+  file: cc-gateway.log

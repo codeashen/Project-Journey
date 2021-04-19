@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.stylefeng.guns</groupId>
+    <artifactId>cc-api</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>cc-api</name>
+    <description>CC影院的API</description>
+
+    <parent>
+        <groupId>com.stylefeng</groupId>
+        <artifactId>guns-parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.stylefeng</groupId>
+            <artifactId>guns-core</artifactId>
+        </dependency>
+        <!-- 分布式事务框架 tcc-transaction -->
+        <dependency>
+            <groupId>org.mengyun</groupId>
+            <artifactId>tcc-transaction-dubbo</artifactId>
+            <version>1.2.12</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>dubbo</artifactId>
+                    <groupId>org.apache.dubbo</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>dubbo-dependencies-zookeeper</artifactId>
+                    <groupId>org.apache.dubbo</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mengyun</groupId>
+            <artifactId>tcc-transaction-spring</artifactId>
+            <version>1.2.12</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,37 @@
+server:
+  port: 7102
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+      
+
+spring:
+  application:
+    name: hello-service-consumer
+    
+logging:
+  config: classpath:logback.xml
+
+# ribbon全局配置
+ribbon:
+  MaxAutoRetries: 2
+  
+# ribbon指定客户端配置
+hello-service-provider:
+  ribbon:
+    MaxAutoRetries: 1
+    
+feign:
+  hystrix:
+    enabled: true  #feign整合hystrix开启
+  httpclient:
+    enabled: true  #Feign底层实现切换为Apache的HttpClient
+  compression:
+    request:
+      enabled: true   #开启请求压缩
+      mime-types: text/xml,application/xml,application/json #压缩对象
+      min-request-size: 2048  #触发压缩的最小阈值
+    response:
+      enabled: true   #开启响应压缩
