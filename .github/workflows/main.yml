@@ -1,0 +1,22 @@
+# 同步gitee工作流
+name: Sync
+
+# push到master分支触发
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.repository == 'codeashen/Project-Journey'
+    steps:
+      # 同步到gitee
+      - name: Sync To Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
+        with:
+          # 源仓库和目标仓库
+          source-repo: git@github.com:codeashen/Project-Journey.git
+          destination-repo: git@gitee.com:codeashen/project-journey.git
